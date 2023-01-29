@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="canvas" style="width: 100%; height: 1300px"></div>
+    </div>
+    <script>
+      createWorldChart(
+        "http://localhost:8004/data?question=1",
+        "canvas",
+        "Anzahl der Queries, die den Ländernamen enthalten."
+      );
+    </script>
+  </body>
+</html>

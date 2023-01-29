@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="canvas" style="width: 100%; height: 1000px"></div>
+    </div>
+    <script>
+      createBarChart("http://localhost:8004/data?question=5", {
+        element: "canvas",
+        title:
+          "Anzahl der Suchanfragen nach dem Namen eines Staatsoberhauptes, welches 2006 im Amt war",
+        xValues: "NAME",
+        yValues: "ANZAHL",
+        yTitle: "Anzahl Suchen",
+        xTitle: "Name des Staatsoberhauptes",
+        mutate: (rawData) => [rawData.rows],
+      });
+    </script>
+  </body>
+</html>

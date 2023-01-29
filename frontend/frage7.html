@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="canvas" style="width: 100%; height: 2000px"></div>
+      <div id="canvas2" style="width: 100%; height: 2000px"></div>
+    </div>
+    <script>
+      const gesamtTreshold = 100;
+      const onlyCountriesTreshold = 60;
+      createPieChart(
+        "http://localhost:8004/data?question=7",
+        "canvas",
+        "Anzahl der Suchanfragen mit dem Wort 'war' im Zusammenhang mit dem jeweiligen Land.",
+        "ANZAHL",
+        "NAME",
+        "inside+outside",
+        (rawData) => {
+          const other = rawData.rows
+            .filter((row) => row.ANZAHL < gesamtTreshold)
+            .map((row) => row.ANZAHL)
+            .reduce((acc, val) => (acc += val));
+
+          const mutatedData = [
+            ...rawData.rows.filter((row) => row.ANZAHL >= gesamtTreshold),
+            { NAME: "Andere", ANZAHL: other },
+          ];
+          return mutatedData;
+        }
+      );
+
+      createPieChart(
+        "http://localhost:8004/data?question=7",
+        "canvas2",
+        "Anzahl der Suchanfragen mit dem Wort 'war' im Zusammenhang mit dem jeweiligen Land.",
+        "ANZAHL",
+        "NAME",
+        "outside",
+        (rawData) => {
+          const other = rawData.rows
+            .filter((row) => row.ANZAHL < onlyCountriesTreshold)
+            .map((row) => row.ANZAHL)
+            .reduce((acc, val) => (acc += val));
+
+          const mutatedData = [
+            ...rawData.rows
+              .filter((row) => row.NAME !== "Gesamt")
+              .filter((row) => row.ANZAHL >= onlyCountriesTreshold),
+            { NAME: "Andere", ANZAHL: other },
+          ];
+          return mutatedData;
+        }
+      );
+    </script>
+  </body>
+</html>

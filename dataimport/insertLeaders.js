@@ -31,7 +31,7 @@ async function createStatement() {
   }
   output += "SELECT * FROM dual;";
   console.log(output);
-  fs.writeFileSync("./insertLeaders", output);
+  fs.writeFileSync("../db/dml/leaders.sql", output);
 }
 
 createStatement();

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="canvas" style="width: 100%; height: 1000px"></div>
+    </div>
+    <script>
+      createLineChart("http://localhost:8004/data?question=11", {
+        element: "canvas",
+        labelsName: "TAG",
+        valuesName: "ANZAHL",
+        type: "markers",
+        title:
+          "Die 2 meistgesuchten Länder an jedem Tag zwischen 01.03.2006 und 31.05.2006. (ohne Georgia)",
+        xTitle: "n-ter Tag des Zeitraums",
+        yTitle: "Anzahl der Suchanfragen",
+        mutate: (rawData) => {
+          let data = {};
+          let totalDays = 1;
+          for (let month = 3; month <= 5; month++) {
+            let days = month % 2 === 0 ? 30 : 31;
+            for (let day = 1; day <= days; day++) {
+              rawData.rows
+                .filter((row) => row.NAME !== "Georgia")
+                .filter((row) => row.MONAT === month)
+                .filter((row) => row.TAG === day)
+                .sort((a, b) => b.ANZAHL - a.ANZAHL)
+                .slice(0, 2)
+                .forEach((element) => {
+                  if (!data[element.NAME]) {
+                    data[element.NAME] = [];
+                  }
+                  data[element.NAME].push({
+                    TAG: totalDays,
+                    ANZAHL: element.ANZAHL,
+                  });
+                });
+              totalDays++;
+            }
+          }
+          return data;
+        },
+      });
+    </script>
+  </body>
+</html>
