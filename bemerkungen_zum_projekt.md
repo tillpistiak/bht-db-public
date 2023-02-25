@@ -1,5 +1,7 @@
 # Bemerkungen zum Datenbanken Projekt
 
+**Github Projekt:** [https://github.com/tillpistiak/bht-db-public](https://github.com/tillpistiak/bht-db-public)
+
 ## Änderungen der Fragestellung zu Abgabe 2
 Für Frage 4 sowie Frage 8 haben wir uns entschieden, die Anzahl der Suchanfragen auf Tagesebene anstatt auf Monatsebene darzustellen. Die Darstellung auf Monatsebene hatte mit gerade einmal 3 Datenpunkten pro Land ein eher uninteressantes Ergebnis zur Folge. <br>
 Damit die Diagramme auch bei Darstellung auf Tagesebene einigermaßen übersichtlich bleiben, haben wir uns zudem entschieden, die betrachteten Länder auf die beiden jeweils meistgesuchten Länder für Frage 4, sowie das meistgesuchte Land für Frage 8 zu reduzieren.<br><br>
@@ -41,6 +43,7 @@ Zur Umgehung dieses Problems haben wir einen Parameter `USE_DB` per Umgebungsvar
 Erfolgt der Zugriff über die Datenbank, so werden die lokalen Cache Files aktualisiert. <br>
 Die Bereitstellungszeiten der Diagramme konnten so drastisch reduziert werden.
 
+
 ### Verwendung von Ländernamen als Teil anderer Wörter
 **Problem:** <br>
 Viele Ländernamen kommen häufig als Teil anderer, teilweise völlig unabhängiger, Suchbegriffe vor. Beispielsweise kommt **"Oman"** sehr häufig als Teil des Wortes **"Woman"** vor. <br>
@@ -63,6 +66,8 @@ create view VW_QUERYDATA_KEYWORDS_WHOLE_WORDS as
 ```
 
 
+<div style="page-break-after: always"></div>
+
 ## Ausblick
 * Synonyme/ Abkürzungen für Länder hinzufügen (z.B. USA)
   * Einige Länder kämen höchstwahrscheinlich deutlich häufiger in den Suchanfragen vor, wenn bspw. deren Abkürzungen ebenfalls in die Suche einbezogen würde. 
@@ -70,7 +75,7 @@ create view VW_QUERYDATA_KEYWORDS_WHOLE_WORDS as
   * Das Anlegen von Indices für bestimmte Spalten der angelegten Tabellen könnte die Performance der Queries u.U. deutlich steigern.
 * Caching verbessern (nachladen im Hintergrund) 
   * Das Aktualisieren der lokalen Cache Files erfolgt momentan nur, wenn der Parameter `USE_DB` manuell auf `true` gesetzt wird. In diesem Fall wird der Cache allerdings nicht mehr für die Bereitstellung der Daten für die Diagramme verwendet. 
-  * In der Zukunft wäre eine Lösung denkbar, bei der die Daten initial aus dem Cache geladen werden. Im Hintergrund werden die Cache Files durch einen Zugriff auf die tatsächliche Datenbank regelmäßig aktualisiert. Auf diese Weise blieben die Ladezeiten für die Diagramme gering, deren aktualität wäre gleichzeitg aber auch sichergestellt.
+  * In der Zukunft wäre eine Lösung denkbar, bei der die Daten initial aus dem Cache geladen werden. Im Hintergrund werden die Cache Files durch einen Zugriff auf die tatsächliche Datenbank regelmäßig aktualisiert. Auf diese Weise blieben die Ladezeiten für die Diagramme gering, deren Aktualität wäre gleichzeitg aber auch sichergestellt.
 * Ländernamen Fixen
   * Einige Länder sind mit sehr ungünstigen Namen in der Datenbank der Weltbank gespeichert. Das führt dazu, dass diese Länder in keiner oder nur vereinzelten Suchanfragen vorkommen. Zu diesen Ländern gehören unter Anderem: 
     * Ägypten ("Egypt, Arab Rep.")
